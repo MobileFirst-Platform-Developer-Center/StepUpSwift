@@ -55,10 +55,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eCB-Ma-W8Z">
-                                <rect key="frame" x="168" y="108" width="112" height="30"/>
-                                <state key="normal" title="Transfer Founds"/>
+                                <rect key="frame" x="173" y="108" width="103" height="30"/>
+                                <state key="normal" title="Transfer Funds"/>
                                 <connections>
-                                    <action selector="transferFounds:" destination="2Pi-vZ-8KG" eventType="touchUpInside" id="PwJ-jJ-dnz"/>
+                                    <action selector="transferFunds:" destination="2Pi-vZ-8KG" eventType="touchUpInside" id="5eZ-ZE-cDx"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Result label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n2C-7n-ez5">
