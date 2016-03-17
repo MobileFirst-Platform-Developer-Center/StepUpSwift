@@ -43,11 +43,13 @@ class UserLoginChallengeHandler : WLChallengeHandler {
     
     override func handleSuccess(success: [NSObject : AnyObject]!) {
         print("\(self.challengeHandlerName): handleSuccess - \(success)")
+        self.isChallenged = false
         NSNotificationCenter.defaultCenter().postNotificationName(ACTION_USERLOGIN_CHALLENGE_SUCCESS , object: self)
     }
     
-//    override func handleFailure(failure: [NSObject : AnyObject]!) {
-//        print("\(self.challengeHandlerName): \(failure)")
+    override func handleFailure(failure: [NSObject : AnyObject]!) {
+        print("\(self.challengeHandlerName): \(failure)")
+        self.isChallenged = false
 //        var errorMsg: String
 //        if (failure["failure"] is NSNull) {
 //            errorMsg = "Unknown error"
@@ -55,7 +57,7 @@ class UserLoginChallengeHandler : WLChallengeHandler {
 //            errorMsg = failure["failure"] as! String
 //        }
 //        NSNotificationCenter.defaultCenter().postNotificationName(ACTION_CHALLENGE_FAILURE, object: self, userInfo: ["errorMsg":errorMsg])
-//    }
+    }
     
     func login(notification: NSNotification){
         print("\(self.challengeHandlerName): login")

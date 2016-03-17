@@ -40,7 +40,7 @@ class LoginViewController: UIViewController {
 
     @IBAction func login(sender: AnyObject) {
         if(self.username.text != "" && self.password.text != ""){
-            NSNotificationCenter.defaultCenter().postNotificationName(ACTION_USERLOGIN_LOGIN_REQUIREDs, object: self, userInfo: ["username": username.text!, "password": password.text!])
+            NSNotificationCenter.defaultCenter().postNotificationName(ACTION_USERLOGIN_LOGIN_REQUIRED, object: self, userInfo: ["username": username.text!, "password": password.text!])
         } else {
             errorMsgLabel.text = "Username and password are required"
         }

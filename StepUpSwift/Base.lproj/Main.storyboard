@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--StepUp-->
@@ -41,34 +42,47 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hello," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r72-b1-uU3">
-                                <rect key="frame" x="18" y="79" width="44" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r72-b1-uU3">
+                                <rect key="frame" x="14" y="79" width="44" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tla-gE-FeT">
-                                <rect key="frame" x="40" y="108" width="112" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tla-gE-FeT">
+                                <rect key="frame" x="48" y="108" width="94" height="30"/>
                                 <state key="normal" title="Get Balance"/>
                                 <connections>
                                     <action selector="getBalance:" destination="2Pi-vZ-8KG" eventType="touchUpInside" id="W15-p5-p3Z"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eCB-Ma-W8Z">
-                                <rect key="frame" x="173" y="108" width="103" height="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Result label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n2C-7n-ez5">
+                                <rect key="frame" x="16" y="175" width="288" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eCB-Ma-W8Z">
+                                <rect key="frame" x="157" y="108" width="115" height="30"/>
                                 <state key="normal" title="Transfer Funds"/>
                                 <connections>
                                     <action selector="transferFunds:" destination="2Pi-vZ-8KG" eventType="touchUpInside" id="5eZ-ZE-cDx"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Result label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n2C-7n-ez5">
-                                <rect key="frame" x="18" y="175" width="282" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="n2C-7n-ez5" firstAttribute="trailing" secondItem="tUX-wp-aPf" secondAttribute="trailingMargin" id="0S9-Vi-be1"/>
+                            <constraint firstItem="n2C-7n-ez5" firstAttribute="top" secondItem="tla-gE-FeT" secondAttribute="bottom" constant="37" id="3zJ-Wi-H1P"/>
+                            <constraint firstItem="eCB-Ma-W8Z" firstAttribute="top" secondItem="r72-b1-uU3" secondAttribute="bottom" constant="8" id="7PB-kT-AwH"/>
+                            <constraint firstItem="tla-gE-FeT" firstAttribute="leading" secondItem="tUX-wp-aPf" secondAttribute="leadingMargin" constant="32" id="9Vl-a9-8RT"/>
+                            <constraint firstItem="eCB-Ma-W8Z" firstAttribute="leading" secondItem="tUX-wp-aPf" secondAttribute="leadingMargin" constant="141" id="FlY-Hf-Ztk"/>
+                            <constraint firstItem="r72-b1-uU3" firstAttribute="leading" secondItem="tUX-wp-aPf" secondAttribute="leadingMargin" constant="-2" id="M4H-ST-xUS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="eCB-Ma-W8Z" secondAttribute="trailing" constant="32" id="RhY-FU-YSa"/>
+                            <constraint firstItem="n2C-7n-ez5" firstAttribute="leading" secondItem="tUX-wp-aPf" secondAttribute="leadingMargin" id="TMI-FC-1kx"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tla-gE-FeT" secondAttribute="trailing" constant="162" id="oEY-mq-SQ8"/>
+                            <constraint firstItem="r72-b1-uU3" firstAttribute="top" secondItem="QK5-KK-hi8" secondAttribute="bottom" constant="15" id="omD-7G-bJl"/>
+                            <constraint firstItem="tla-gE-FeT" firstAttribute="top" secondItem="r72-b1-uU3" secondAttribute="bottom" constant="8" id="y0V-st-uNW"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="cXR-5e-tJG">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="uoT-cE-umz">
@@ -105,24 +119,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="john" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ond-WN-o55">
-                                <rect key="frame" x="20" y="80" width="280" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="john" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ond-WN-o55">
+                                <rect key="frame" x="16" y="80" width="288" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="john123" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NxW-YH-rao">
-                                <rect key="frame" x="20" y="118" width="280" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="john123" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NxW-YH-rao">
+                                <rect key="frame" x="16" y="118" width="288" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Error msg" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X3p-4W-rYh">
-                                <rect key="frame" x="20" y="198" width="280" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error msg" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X3p-4W-rYh">
+                                <rect key="frame" x="16" y="198" width="288" height="18"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aYR-vl-5wF">
-                                <rect key="frame" x="20" y="156" width="38" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aYR-vl-5wF">
+                                <rect key="frame" x="16" y="156" width="38" height="30"/>
                                 <state key="normal" title="Login"/>
                                 <connections>
                                     <action selector="login:" destination="Tax-pm-oNQ" eventType="touchUpInside" id="yxe-ne-XT8"/>
@@ -130,6 +144,19 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="NxW-YH-rao" firstAttribute="leading" secondItem="nWA-2W-GfB" secondAttribute="leadingMargin" id="5dm-2D-Gog"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="aYR-vl-5wF" secondAttribute="leading" id="9mX-1S-AJG"/>
+                            <constraint firstItem="X3p-4W-rYh" firstAttribute="top" secondItem="aYR-vl-5wF" secondAttribute="bottom" constant="12" id="A69-rr-TEk"/>
+                            <constraint firstItem="NxW-YH-rao" firstAttribute="top" secondItem="Ond-WN-o55" secondAttribute="bottom" constant="8" id="ISi-N3-q0q"/>
+                            <constraint firstItem="Ond-WN-o55" firstAttribute="leading" secondItem="nWA-2W-GfB" secondAttribute="leadingMargin" id="S3I-fY-VUH"/>
+                            <constraint firstItem="Ond-WN-o55" firstAttribute="trailing" secondItem="nWA-2W-GfB" secondAttribute="trailingMargin" id="TPK-bn-FOh"/>
+                            <constraint firstItem="Ond-WN-o55" firstAttribute="top" secondItem="0Wk-xd-LXI" secondAttribute="bottom" constant="60" id="U3L-z1-xMv"/>
+                            <constraint firstItem="X3p-4W-rYh" firstAttribute="trailing" secondItem="nWA-2W-GfB" secondAttribute="trailingMargin" id="h1m-aj-epM"/>
+                            <constraint firstItem="NxW-YH-rao" firstAttribute="trailing" secondItem="nWA-2W-GfB" secondAttribute="trailingMargin" id="ifQ-K8-gci"/>
+                            <constraint firstItem="aYR-vl-5wF" firstAttribute="top" secondItem="NxW-YH-rao" secondAttribute="bottom" constant="8" id="pgz-oh-0yV"/>
+                            <constraint firstItem="X3p-4W-rYh" firstAttribute="leading" secondItem="nWA-2W-GfB" secondAttribute="leadingMargin" id="qur-8W-ebZ"/>
+                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -164,7 +191,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="irs-qr-OFR"/>
+        <segue reference="zPs-Mn-BdJ"/>
         <segue reference="npY-hF-zJl"/>
     </inferredMetricsTieBreakers>
 </document>
