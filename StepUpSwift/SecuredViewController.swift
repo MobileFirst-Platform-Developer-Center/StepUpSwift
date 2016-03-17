@@ -21,20 +21,20 @@ class SecuredViewController: UIViewController {
     
     @IBOutlet weak var helloUserLabel: UILabel!
     @IBOutlet weak var resultLabel: UILabel!
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-    
     }
     
     override func viewDidAppear(animated: Bool) {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showPinCodePopup", name: ACTION_CHALLENGE_RECEIVED, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showErrorPopup", name: ACTION_CHALLENGE_FAILURE, object: nil)
+        self.navigationItem.setHidesBackButton(true, animated:true);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showPinCodePopup:", name: ACTION_PINCODE_CHALLENGE_RECEIVED, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showErrorPopup:", name: ACTION_PINCODE_CHALLENGE_FAILURE, object: nil)
     }
     
-    
+    override func viewDidDisappear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
 
     @IBAction func getBalance(sender: AnyObject) {
         let request = WLResourceRequest(URL: NSURL(string: "/adapters/ResourceAdapter/balance"), method: WLHttpMethodGet)
@@ -69,16 +69,20 @@ class SecuredViewController: UIViewController {
 
     }
     
+    @IBAction func logout(sender: AnyObject) {
+        NSNotificationCenter.defaultCenter().postNotificationName(ACTION_USERLOGIN_LOGOUT , object: self)
+    }
+    
     func transfer(amount: String){
         let request = WLResourceRequest(URL: NSURL(string: "/adapters/ResourceAdapter/transfer"), method: WLHttpMethodPost)
         let formParams = ["amount":amount]
         request.sendWithFormParameters(formParams) { (response, error) -> Void in
             if (error != nil){
-                NSLog("transferFoundsError: " + error.description)
+                print("transferFoundsError: \(error.description)")
                 self.resultLabel.text = "Faild to transfer funds"
             } else {
-                NSLog("transferFounds = " + String(response.status))
-                self.resultLabel.text = "Tranfer funds successfully"
+                print("transferFounds = \(String(response.status))")
+                self.resultLabel.text = "Tranfer funds successfully."
             }
         }
     }
@@ -93,10 +97,10 @@ class SecuredViewController: UIViewController {
         }
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
             let pinTextField = alert.textFields![0] as UITextField
-            NSNotificationCenter.defaultCenter().postNotificationName(ACTION_CHALLENGE_SUBMIT_ANSWER , object: self, userInfo: ["pinCode":pinTextField])
+            NSNotificationCenter.defaultCenter().postNotificationName(ACTION_PINCODE_CHALLENGE_SUBMIT_ANSWER , object: self, userInfo: ["pinCode":pinTextField.text!])
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) -> Void in
-            NSNotificationCenter.defaultCenter().postNotificationName(ACTION_CHALLENGE_CANCEL , object: self)
+            NSNotificationCenter.defaultCenter().postNotificationName(ACTION_PINCODE_CHALLENGE_CANCEL , object: self)
         }))
         
         self.presentViewController(alert,
@@ -115,23 +119,5 @@ class SecuredViewController: UIViewController {
             completion: nil)
 
     }
-    
-    
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

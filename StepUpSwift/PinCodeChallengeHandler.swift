@@ -20,43 +20,54 @@ import IBMMobileFirstPlatformFoundation
 class PinCodeChallengeHandler : WLChallengeHandler {
     
     let challengeHandlerName = "PinCodeChallengeHandler"
+    let securityCheckName = "StepUpPinCode"
     
     override init() {
-        super.init(securityCheck: "PinCodeAttempts")
+        super.init(securityCheck: securityCheckName)
         WLClient.sharedInstance().registerChallengeHandler(self)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "challengeSubmitAnswer", name: ACTION_CHALLENGE_SUBMIT_ANSWER, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "challengeCanceled", name: ACTION_CHALLENGE_CANCEL, object: nil)
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "challengeSubmitAnswer:", name: ACTION_PINCODE_CHALLENGE_SUBMIT_ANSWER, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "challengeCanceled:", name: ACTION_PINCODE_CHALLENGE_CANCEL, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "logout:", name: ACTION_PINCODE_LOGOUT, object: nil)
     }
     
     override func handleChallenge(challenge: [NSObject : AnyObject]!) {
-        print("\(self.challengeHandlerName): \(challenge)")
+        print("\(self.challengeHandlerName): handleChallenge - \(challenge)")
         var errorMsg: String
         if (challenge["errorMsg"] is NSNull) {
             errorMsg = "Enter PIN code:"
         } else{
             errorMsg = challenge["errorMsg"] as! String
         }
-        NSNotificationCenter.defaultCenter().postNotificationName(ACTION_CHALLENGE_RECEIVED , object: self, userInfo: ["errorMsg":errorMsg])
+        NSNotificationCenter.defaultCenter().postNotificationName(ACTION_PINCODE_CHALLENGE_RECEIVED , object: self, userInfo: ["errorMsg":errorMsg])
     }
     
     override func handleFailure(failure: [NSObject : AnyObject]!) {
-        print("\(self.challengeHandlerName): \(failure)")
+        print("\(self.challengeHandlerName): handleFailure - \(failure)")
         var errorMsg: String
         if (failure["failure"] is NSNull) {
             errorMsg = "Unknown error"
         } else {
             errorMsg = failure["failure"] as! String
         }
-        NSNotificationCenter.defaultCenter().postNotificationName(ACTION_CHALLENGE_FAILURE, object: self, userInfo: ["errorMsg":errorMsg])
+        NSNotificationCenter.defaultCenter().postNotificationName(ACTION_PINCODE_CHALLENGE_FAILURE, object: self, userInfo: ["errorMsg":errorMsg])
     }
     
     func challengeSubmitAnswer(notification: NSNotification){
+        print("\(self.challengeHandlerName): challengeSubmitAnswer")
         self.submitChallengeAnswer(["pin": (notification.userInfo!["pinCode"] as? String)!])
     }
     
-    func challengeCanceled(){
+    func challengeCanceled(notification: NSNotification){
+        print("\(self.challengeHandlerName): challengeCanceled")
         self.submitFailure(nil)
     }
     
+    func logout(notification: NSNotification){
+        print("\(self.challengeHandlerName): logout")
+        WLAuthorizationManager.sharedInstance().logout(securityCheckName) { (error) -> Void in
+            if (error != nil){
+                print("\(self.challengeHandlerName): logout onFailure - \(error.description)")
+            }
+        }
+    }
 }

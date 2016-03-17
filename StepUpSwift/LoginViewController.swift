@@ -18,37 +18,41 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
-    @IBOutlet weak var usernameText: UITextField!
-    @IBOutlet weak var passwordText: UITextField!
+    @IBOutlet weak var username: UITextField!
+    @IBOutlet weak var password: UITextField!
     @IBOutlet weak var errorMsgLabel: UILabel!
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.navigationItem.setHidesBackButton(true, animated:true);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showError:", name: ACTION_USERLOGIN_CHALLENGE_RECEIVED, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showProtectedPage:", name: ACTION_USERLOGIN_CHALLENGE_SUCCESS, object: nil)
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
     @IBAction func login(sender: AnyObject) {
+        if(self.username.text != "" && self.password.text != ""){
+            NSNotificationCenter.defaultCenter().postNotificationName(ACTION_USERLOGIN_LOGIN_REQUIREDs, object: self, userInfo: ["username": username.text!, "password": password.text!])
+        } else {
+            errorMsgLabel.text = "Username and password are required"
+        }
     }
 
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func showError(notification: NSNotification){
+        errorMsgLabel.text = notification.userInfo!["errorMsg"] as? String
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func showProtectedPage(notification: NSNotification){
+        self.performSegueWithIdentifier("loginSuccess", sender: self)
     }
-    */
+    
 
 }

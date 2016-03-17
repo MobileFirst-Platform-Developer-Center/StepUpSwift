@@ -15,22 +15,35 @@
  */
 
 import UIKit
+import IBMMobileFirstPlatformFoundation
 
 class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showLoginPage:", name: ACTION_USERLOGIN_CHALLENGE_RECEIVED, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showProtectedPage:", name: ACTION_USERLOGIN_CHALLENGE_SUCCESS, object: nil)
         
-        if (true){
-            self.performSegueWithIdentifier("showSecuredVC", sender:self)
+        WLAuthorizationManager.sharedInstance().obtainAccessTokenForScope("StepUpUserLogin") { (token, error) -> Void in
+            if (error != nil){
+                print("obtainAccessToken onSuccess")
+            } else {
+                print("obtainAccessToken onFailure")
+            }
         }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewDidDisappear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
-
-
+    
+    func showLoginPage(notification: NSNotification){
+        self.performSegueWithIdentifier("showLoginVC", sender: self)
+    }
+    
+    func showProtectedPage(notification: NSNotification){
+        self.performSegueWithIdentifier("showSecuredVC", sender: self)
+    }
+    
 }
 
