@@ -44,6 +44,7 @@ class UserLoginChallengeHandler : WLChallengeHandler {
     override func handleSuccess(success: [NSObject : AnyObject]!) {
         print("\(self.challengeHandlerName): handleSuccess - \(success)")
         self.isChallenged = false
+        NSUserDefaults.standardUserDefaults().setObject(success["user"]!["displayName"]! as! String, forKey: "displayName")
         NSNotificationCenter.defaultCenter().postNotificationName(ACTION_USERLOGIN_CHALLENGE_SUCCESS , object: self)
     }
     

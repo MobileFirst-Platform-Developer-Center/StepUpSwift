@@ -26,10 +26,11 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.title = "StepUp"
+        self.navigationItem.setHidesBackButton(true, animated:true);
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.navigationItem.setHidesBackButton(true, animated:true);
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showError:", name: ACTION_USERLOGIN_CHALLENGE_RECEIVED, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showProtectedPage:", name: ACTION_USERLOGIN_CHALLENGE_SUCCESS, object: nil)
     }

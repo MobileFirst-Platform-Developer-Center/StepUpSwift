@@ -24,10 +24,18 @@ class SecuredViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.title = "StepUp"
+        self.navigationItem.setHidesBackButton(true, animated:true);
+        
+        let logout = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target: self, action: "logout:")
+        self.navigationItem.rightBarButtonItem = logout
+        
+        if let defaults = NSUserDefaults.standardUserDefaults().stringForKey("displayName"){
+            self.helloUserLabel.text = "Hello, " + defaults
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
-        self.navigationItem.setHidesBackButton(true, animated:true);
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showPinCodePopup:", name: ACTION_PINCODE_CHALLENGE_RECEIVED, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showErrorPopup:", name: ACTION_PINCODE_CHALLENGE_FAILURE, object: nil)
     }
@@ -70,6 +78,7 @@ class SecuredViewController: UIViewController {
     }
     
     @IBAction func logout(sender: AnyObject) {
+        self.performSegueWithIdentifier("logout", sender: self)
         NSNotificationCenter.defaultCenter().postNotificationName(ACTION_USERLOGIN_LOGOUT , object: self)
     }
     

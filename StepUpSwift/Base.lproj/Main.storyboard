@@ -55,8 +55,8 @@
                                     <action selector="getBalance:" destination="2Pi-vZ-8KG" eventType="touchUpInside" id="W15-p5-p3Z"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Result label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n2C-7n-ez5">
-                                <rect key="frame" x="16" y="175" width="288" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n2C-7n-ez5">
+                                <rect key="frame" x="16" y="175" width="288" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -84,23 +84,12 @@
                             <constraint firstItem="tla-gE-FeT" firstAttribute="top" secondItem="r72-b1-uU3" secondAttribute="bottom" constant="8" id="y0V-st-uNW"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="cXR-5e-tJG">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="uoT-cE-umz">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2eg-oz-d0p">
-                                <rect key="frame" x="233" y="7" width="71" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Logout"/>
-                                <connections>
-                                    <action selector="logout:" destination="2Pi-vZ-8KG" eventType="touchUpInside" id="dfk-33-ND9"/>
-                                    <segue destination="Tax-pm-oNQ" kind="show" identifier="logout" id="npY-hF-zJl"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="cXR-5e-tJG"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="helloUserLabel" destination="r72-b1-uU3" id="bxx-U2-s8f"/>
                         <outlet property="resultLabel" destination="n2C-7n-ez5" id="Vvc-cg-m5d"/>
+                        <segue destination="Tax-pm-oNQ" kind="show" identifier="logout" id="0yW-I0-iJh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Srh-ds-dEZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -120,42 +109,42 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="john" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ond-WN-o55">
-                                <rect key="frame" x="16" y="80" width="288" height="30"/>
+                                <rect key="frame" x="16" y="77" width="288" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="john123" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NxW-YH-rao">
-                                <rect key="frame" x="16" y="118" width="288" height="30"/>
+                                <rect key="frame" x="16" y="115" width="288" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error msg" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X3p-4W-rYh">
-                                <rect key="frame" x="16" y="198" width="288" height="18"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aYR-vl-5wF">
-                                <rect key="frame" x="16" y="156" width="38" height="30"/>
+                                <rect key="frame" x="16" y="153" width="38" height="30"/>
                                 <state key="normal" title="Login"/>
                                 <connections>
                                     <action selector="login:" destination="Tax-pm-oNQ" eventType="touchUpInside" id="yxe-ne-XT8"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X3p-4W-rYh">
+                                <rect key="frame" x="16" y="191" width="288" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="NxW-YH-rao" firstAttribute="leading" secondItem="nWA-2W-GfB" secondAttribute="leadingMargin" id="5dm-2D-Gog"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="aYR-vl-5wF" secondAttribute="leading" id="9mX-1S-AJG"/>
-                            <constraint firstItem="X3p-4W-rYh" firstAttribute="top" secondItem="aYR-vl-5wF" secondAttribute="bottom" constant="12" id="A69-rr-TEk"/>
-                            <constraint firstItem="NxW-YH-rao" firstAttribute="top" secondItem="Ond-WN-o55" secondAttribute="bottom" constant="8" id="ISi-N3-q0q"/>
-                            <constraint firstItem="Ond-WN-o55" firstAttribute="leading" secondItem="nWA-2W-GfB" secondAttribute="leadingMargin" id="S3I-fY-VUH"/>
-                            <constraint firstItem="Ond-WN-o55" firstAttribute="trailing" secondItem="nWA-2W-GfB" secondAttribute="trailingMargin" id="TPK-bn-FOh"/>
-                            <constraint firstItem="Ond-WN-o55" firstAttribute="top" secondItem="0Wk-xd-LXI" secondAttribute="bottom" constant="60" id="U3L-z1-xMv"/>
-                            <constraint firstItem="X3p-4W-rYh" firstAttribute="trailing" secondItem="nWA-2W-GfB" secondAttribute="trailingMargin" id="h1m-aj-epM"/>
-                            <constraint firstItem="NxW-YH-rao" firstAttribute="trailing" secondItem="nWA-2W-GfB" secondAttribute="trailingMargin" id="ifQ-K8-gci"/>
-                            <constraint firstItem="aYR-vl-5wF" firstAttribute="top" secondItem="NxW-YH-rao" secondAttribute="bottom" constant="8" id="pgz-oh-0yV"/>
-                            <constraint firstItem="X3p-4W-rYh" firstAttribute="leading" secondItem="nWA-2W-GfB" secondAttribute="leadingMargin" id="qur-8W-ebZ"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="aYR-vl-5wF" secondAttribute="leading" id="120-RF-ijR"/>
+                            <constraint firstItem="NxW-YH-rao" firstAttribute="trailing" secondItem="nWA-2W-GfB" secondAttribute="trailingMargin" id="9pF-lv-96D"/>
+                            <constraint firstItem="NxW-YH-rao" firstAttribute="leading" secondItem="nWA-2W-GfB" secondAttribute="leadingMargin" id="9zK-qv-WPA"/>
+                            <constraint firstItem="NxW-YH-rao" firstAttribute="top" secondItem="Ond-WN-o55" secondAttribute="bottom" constant="8" id="Fiq-eG-hSa"/>
+                            <constraint firstItem="aYR-vl-5wF" firstAttribute="top" secondItem="NxW-YH-rao" secondAttribute="bottom" constant="8" id="Ii6-Gg-VEw"/>
+                            <constraint firstItem="X3p-4W-rYh" firstAttribute="leading" secondItem="nWA-2W-GfB" secondAttribute="leadingMargin" id="RIW-rH-ebL"/>
+                            <constraint firstItem="X3p-4W-rYh" firstAttribute="trailing" secondItem="nWA-2W-GfB" secondAttribute="trailingMargin" id="WjW-9f-qUn"/>
+                            <constraint firstItem="Ond-WN-o55" firstAttribute="leading" secondItem="nWA-2W-GfB" secondAttribute="leadingMargin" id="aSe-bl-bw0"/>
+                            <constraint firstItem="Ond-WN-o55" firstAttribute="top" secondItem="0Wk-xd-LXI" secondAttribute="bottom" constant="13" id="bo1-1J-l90"/>
+                            <constraint firstItem="X3p-4W-rYh" firstAttribute="top" secondItem="aYR-vl-5wF" secondAttribute="bottom" constant="8" id="h6f-HW-AD2"/>
+                            <constraint firstItem="Ond-WN-o55" firstAttribute="trailing" secondItem="nWA-2W-GfB" secondAttribute="trailingMargin" id="lL9-Nm-cNR"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
@@ -192,6 +181,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="zPs-Mn-BdJ"/>
-        <segue reference="npY-hF-zJl"/>
+        <segue reference="0yW-I0-iJh"/>
     </inferredMetricsTieBreakers>
 </document>
