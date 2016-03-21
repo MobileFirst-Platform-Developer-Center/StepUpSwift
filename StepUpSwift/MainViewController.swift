@@ -26,9 +26,9 @@ class MainViewController: UIViewController {
         
         WLAuthorizationManager.sharedInstance().obtainAccessTokenForScope("StepUpUserLogin") { (token, error) -> Void in
             if (error != nil){
-                print("obtainAccessToken onSuccess")
-            } else {
                 print("obtainAccessToken onFailure")
+            } else {
+                print("obtainAccessToken onSuccess")
             }
         }
     }

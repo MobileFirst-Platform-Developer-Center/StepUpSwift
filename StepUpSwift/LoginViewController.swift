@@ -33,6 +33,8 @@ class LoginViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showError:", name: ACTION_USERLOGIN_CHALLENGE_RECEIVED, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showProtectedPage:", name: ACTION_USERLOGIN_CHALLENGE_SUCCESS, object: nil)
+        //NSNotificationCenter.defaultCenter().addObserver(self, selector: "showProtectedPage:", name: ACTION_PINCODE_CHALLENGE_RECEIVED, object: nil)
+
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -52,8 +54,22 @@ class LoginViewController: UIViewController {
     }
     
     func showProtectedPage(notification: NSNotification){
-        self.performSegueWithIdentifier("loginSuccess", sender: self)
+        if (notification.name == ACTION_USERLOGIN_CHALLENGE_SUCCESS){
+            self.performSegueWithIdentifier("loginSuccess", sender: self)
+        } else {
+            
+            self.performSegueWithIdentifier("pinCodeChallenged", sender: self)
+        }
     }
+    
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if (segue.identifier == "pinCodeChallenged") {
+//            if let destinationVC = segue.destinationViewController as? SecuredViewController{
+//                destinationVC.isChallenged = true
+//                destinationVC.showPinCodePopupNotification = 
+//            }
+//        }
+//    }
     
 
 }

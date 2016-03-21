@@ -21,6 +21,8 @@ class SecuredViewController: UIViewController {
     
     @IBOutlet weak var helloUserLabel: UILabel!
     @IBOutlet weak var resultLabel: UILabel!
+    //var isChallenged = false
+    //var showPinCodePopupNotification: NSNotification
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +40,11 @@ class SecuredViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showPinCodePopup:", name: ACTION_PINCODE_CHALLENGE_RECEIVED, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showErrorPopup:", name: ACTION_PINCODE_CHALLENGE_FAILURE, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showLoginPage:", name: ACTION_USERLOGIN_CHALLENGE_RECEIVED, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showPinCodePopup:", name: ACTION_PINCODE_CHALLENGED, object: nil)
+
+      
+        NSNotificationCenter.defaultCenter().postNotificationName(ACTION_PINCODE_ISCHALLENGED , object: nil)
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -58,6 +65,7 @@ class SecuredViewController: UIViewController {
     }
     
     @IBAction func transferFunds(sender: AnyObject) {
+        self.resultLabel.text = ""
         let alert = UIAlertController(title: "Tranfer funds", message: "Enter amount:", preferredStyle: .Alert)
         alert.addTextFieldWithConfigurationHandler { (textField) -> Void in
             textField.placeholder = "Amount"
@@ -127,6 +135,10 @@ class SecuredViewController: UIViewController {
             animated: true,
             completion: nil)
 
+    }
+    
+    func showLoginPage(notification: NSNotification){
+        self.performSegueWithIdentifier("logout", sender: self)
     }
 
 }
