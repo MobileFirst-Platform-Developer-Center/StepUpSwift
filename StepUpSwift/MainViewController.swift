@@ -21,8 +21,8 @@ class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showLoginPage:", name: ACTION_USERLOGIN_CHALLENGE_RECEIVED, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showProtectedPage:", name: ACTION_USERLOGIN_CHALLENGE_SUCCESS, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showLoginPage(_:)), name: ACTION_USERLOGIN_CHALLENGE_RECEIVED, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showProtectedPage(_:)), name: ACTION_USERLOGIN_CHALLENGE_SUCCESS, object: nil)
         
         WLAuthorizationManager.sharedInstance().obtainAccessTokenForScope("StepUpUserLogin") { (token, error) -> Void in
             if (error != nil){

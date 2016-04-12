@@ -18,7 +18,7 @@ extern NSString * const ERROR_OAUTH_PREVENT_REDIRECT;
 extern NSString * const ERROR_OAUTH_CANCELED;
 
 /**
- * This class manages the entire OAuth flow, from client registration to token generation.
+ * This class manages the OAuth interaction between the client and the authorization server
  */
 @interface WLAuthorizationManager : NSObject
 

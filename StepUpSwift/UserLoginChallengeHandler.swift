@@ -25,8 +25,8 @@ class UserLoginChallengeHandler : WLChallengeHandler {
     override init() {
         super.init(securityCheck: securityCheckName)
         WLClient.sharedInstance().registerChallengeHandler(self)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "login:", name: ACTION_USERLOGIN_LOGIN_REQUIRED, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "logout:", name: ACTION_USERLOGIN_LOGOUT, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(login(_:)), name: ACTION_USERLOGIN_LOGIN_REQUIRED, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(logout(_:)), name: ACTION_USERLOGIN_LOGOUT, object: nil)
     }
     
     override func handleChallenge(challenge: [NSObject : AnyObject]!) {

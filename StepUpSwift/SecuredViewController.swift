@@ -29,19 +29,19 @@ class SecuredViewController: UIViewController {
         self.navigationItem.title = "StepUp"
         self.navigationItem.setHidesBackButton(true, animated:true);
         
-        let logout = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target: self, action: "logout:")
+        let logout = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(logout(_:)))
         self.navigationItem.rightBarButtonItem = logout
         
-        if let defaults = NSUserDefaults.standardUserDefaults().stringForKey("displayName"){
-            self.helloUserLabel.text = "Hello, " + defaults
+        if let userName = NSUserDefaults.standardUserDefaults().stringForKey("displayName"){
+            self.helloUserLabel.text = "Hello, " + userName
         }
     }
     
     override func viewDidAppear(animated: Bool) {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showPinCodePopup:", name: ACTION_PINCODE_CHALLENGE_RECEIVED, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showErrorPopup:", name: ACTION_PINCODE_CHALLENGE_FAILURE, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showLoginPage:", name: ACTION_USERLOGIN_CHALLENGE_RECEIVED, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showPinCodePopup:", name: ACTION_PINCODE_CHALLENGED, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showPinCodePopup(_:)), name: ACTION_PINCODE_CHALLENGE_RECEIVED, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showErrorPopup(_:)), name: ACTION_PINCODE_CHALLENGE_FAILURE, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showLoginPage(_:)), name: ACTION_USERLOGIN_CHALLENGE_RECEIVED, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showPinCodePopup(_:)), name: ACTION_PINCODE_CHALLENGED, object: nil)
 
       
         NSNotificationCenter.defaultCenter().postNotificationName(ACTION_PINCODE_ISCHALLENGED , object: nil)

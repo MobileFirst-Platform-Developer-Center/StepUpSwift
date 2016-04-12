@@ -26,10 +26,10 @@ class PinCodeChallengeHandler : WLChallengeHandler {
     override init() {
         super.init(securityCheck: securityCheckName)
         WLClient.sharedInstance().registerChallengeHandler(self)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "challengeSubmitAnswer:", name: ACTION_PINCODE_CHALLENGE_SUBMIT_ANSWER, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "challengeCanceled:", name: ACTION_PINCODE_CHALLENGE_CANCEL, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "logout:", name: ACTION_PINCODE_LOGOUT, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "isPinCodeChallenged:", name: ACTION_PINCODE_ISCHALLENGED, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(challengeSubmitAnswer(_:)), name: ACTION_PINCODE_CHALLENGE_SUBMIT_ANSWER, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(challengeCanceled(_:)), name: ACTION_PINCODE_CHALLENGE_CANCEL, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(logout(_:)), name: ACTION_PINCODE_LOGOUT, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(isPinCodeChallenged), name: ACTION_PINCODE_ISCHALLENGED, object: nil)
 
     }
     
