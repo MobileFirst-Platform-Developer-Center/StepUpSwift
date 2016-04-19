@@ -19,7 +19,7 @@ import Foundation
 let ACTION_LOGOUT = "com.sample.stepupswift.notify.logout"
 
 let ACTION_PINCODE_CHALLENGE_RECEIVED = "com.sample.stepupswift.notify.pincode.challenge.received"
-//let ACTION_PINCODE_CHALLENGE_FAILURE = "com.sample.stepupswift.notify.challenge.failure"
+let ACTION_PINCODE_CHALLENGE_FAILURE = "com.sample.stepupswift.notify.challenge.failure"
 let ACTION_PINCODE_CHALLENGE_SUBMIT_ANSWER = "com.sample.stepupswift.notify.pincode.challenge.submit.answer"
 let ACTION_PINCODE_CHALLENGE_CANCEL = "com.sample.stepupswift.notify.challenge.cancel"
 

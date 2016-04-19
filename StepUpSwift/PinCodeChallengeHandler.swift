@@ -27,7 +27,7 @@ class PinCodeChallengeHandler : WLChallengeHandler {
         super.init(securityCheck: securityCheckName)
         WLClient.sharedInstance().registerChallengeHandler(self)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(challengeSubmitAnswer(_:)), name: ACTION_PINCODE_CHALLENGE_SUBMIT_ANSWER, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(challengeCanceled(_:)), name: ACTION_PINCODE_CHALLENGE_CANCEL, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(challengeCanceled), name: ACTION_PINCODE_CHALLENGE_CANCEL, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(logout), name: ACTION_USERLOGIN_LOGOUT_SUCCESS, object: nil)
 
     }
@@ -47,13 +47,13 @@ class PinCodeChallengeHandler : WLChallengeHandler {
     override func handleFailure(failure: [NSObject : AnyObject]!) {
         print("\(self.challengeHandlerName): handleFailure - \(failure)")
         isChallenged = false
-//        var errorMsg: String
-//        if (failure["failure"] is NSNull) {
-//            errorMsg = "Unknown error"
-//        } else {
-//            errorMsg = failure["failure"] as! String
-//        }
-//        NSNotificationCenter.defaultCenter().postNotificationName(ACTION_PINCODE_CHALLENGE_FAILURE, object: self, userInfo: ["errorMsg":errorMsg])
+        var errorMsg: String
+        if (failure["failure"] is NSNull) {
+            errorMsg = "Unknown error"
+        } else {
+            errorMsg = failure["failure"] as! String
+        }
+        NSNotificationCenter.defaultCenter().postNotificationName(ACTION_PINCODE_CHALLENGE_FAILURE, object: self, userInfo: ["errorMsg":errorMsg])
     }
     
     override func handleSuccess(success: [NSObject : AnyObject]!) {
@@ -66,7 +66,7 @@ class PinCodeChallengeHandler : WLChallengeHandler {
         self.submitChallengeAnswer(["pin": (notification.userInfo!["pinCode"] as? String)!])
     }
     
-    func challengeCanceled(notification: NSNotification){
+    func challengeCanceled(){
         print("\(self.challengeHandlerName): challengeCanceled")
         self.submitFailure(nil)
     }

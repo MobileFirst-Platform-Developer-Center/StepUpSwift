@@ -34,6 +34,7 @@ class LoginViewController: UIViewController {
         super.viewWillAppear(true)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showError(_:)), name: ACTION_USERLOGIN_CHALLENGE_RECEIVED, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showSecuredPage), name: ACTION_USERLOGIN_CHALLENGE_SUCCESS, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(cancelePincodeChallenge), name: ACTION_PINCODE_CHALLENGE_RECEIVED, object: nil)
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -60,5 +61,8 @@ class LoginViewController: UIViewController {
         }
     }
     
+    func cancelePincodeChallenge(){
+        NSNotificationCenter.defaultCenter().postNotificationName(ACTION_PINCODE_CHALLENGE_CANCEL, object: self)
+    }
 
 }

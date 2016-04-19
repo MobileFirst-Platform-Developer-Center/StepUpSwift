@@ -39,7 +39,7 @@ class SecuredViewController: UIViewController {
             self.helloUserLabel.text = "Hello, " + userName
         }
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showPinCodePopup(_:)), name: ACTION_PINCODE_CHALLENGE_RECEIVED, object: nil)
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showErrorPopup(_:)), name: ACTION_PINCODE_CHALLENGE_FAILURE, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showErrorPopup(_:)), name: ACTION_PINCODE_CHALLENGE_FAILURE, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showLoginPage(_:)), name: ACTION_USERLOGIN_CHALLENGE_RECEIVED, object: nil)
     }
     
@@ -132,16 +132,16 @@ class SecuredViewController: UIViewController {
             completion: nil)
     }
     
-//    func showErrorPopup(notification: NSNotification){
-//        let alert = UIAlertController(title: "Error",
-//            message: notification.userInfo!["errorMsg"] as? String,
-//            preferredStyle: .Alert)
-//        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-//        
-//        self.presentViewController(alert,
-//            animated: true,
-//            completion: nil)
-//    }
+    func showErrorPopup(notification: NSNotification){
+        let alert = UIAlertController(title: "Error",
+            message: notification.userInfo!["errorMsg"] as? String,
+            preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        
+        self.presentViewController(alert,
+            animated: true,
+            completion: nil)
+    }
     
     func showLoginPage(notification: NSNotification){
         self.performSegueWithIdentifier("showLoginPage", sender: self)
