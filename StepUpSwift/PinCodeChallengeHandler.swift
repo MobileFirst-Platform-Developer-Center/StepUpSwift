@@ -28,8 +28,7 @@ class PinCodeChallengeHandler : WLChallengeHandler {
         WLClient.sharedInstance().registerChallengeHandler(self)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(challengeSubmitAnswer(_:)), name: ACTION_PINCODE_CHALLENGE_SUBMIT_ANSWER, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(challengeCanceled(_:)), name: ACTION_PINCODE_CHALLENGE_CANCEL, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(logout(_:)), name: ACTION_PINCODE_LOGOUT, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(isPinCodeChallenged), name: ACTION_PINCODE_ISCHALLENGED, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(logout), name: ACTION_USERLOGIN_LOGOUT_SUCCESS, object: nil)
 
     }
     
@@ -48,13 +47,13 @@ class PinCodeChallengeHandler : WLChallengeHandler {
     override func handleFailure(failure: [NSObject : AnyObject]!) {
         print("\(self.challengeHandlerName): handleFailure - \(failure)")
         isChallenged = false
-        var errorMsg: String
-        if (failure["failure"] is NSNull) {
-            errorMsg = "Unknown error"
-        } else {
-            errorMsg = failure["failure"] as! String
-        }
-        NSNotificationCenter.defaultCenter().postNotificationName(ACTION_PINCODE_CHALLENGE_FAILURE, object: self, userInfo: ["errorMsg":errorMsg])
+//        var errorMsg: String
+//        if (failure["failure"] is NSNull) {
+//            errorMsg = "Unknown error"
+//        } else {
+//            errorMsg = failure["failure"] as! String
+//        }
+//        NSNotificationCenter.defaultCenter().postNotificationName(ACTION_PINCODE_CHALLENGE_FAILURE, object: self, userInfo: ["errorMsg":errorMsg])
     }
     
     override func handleSuccess(success: [NSObject : AnyObject]!) {
@@ -72,16 +71,14 @@ class PinCodeChallengeHandler : WLChallengeHandler {
         self.submitFailure(nil)
     }
     
-    func logout(notification: NSNotification){
+    func logout(){
         print("\(self.challengeHandlerName): logout")
         WLAuthorizationManager.sharedInstance().logout(securityCheckName) { (error) -> Void in
             if (error != nil){
-                print("\(self.challengeHandlerName): logout onFailure - \(error.description)")
+                print("\(self.challengeHandlerName): logout failure - \(error.description)")
+            } else {
+                print("\(self.challengeHandlerName): logout success)")
             }
         }
-    }
-    
-    func isPinCodeChallenged(){
-        NSNotificationCenter.defaultCenter().postNotificationName(ACTION_PINCODE_CHALLENGED, object: nil)
     }
 }

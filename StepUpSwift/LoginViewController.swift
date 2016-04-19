@@ -31,10 +31,9 @@ class LoginViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showError(_:)), name: ACTION_USERLOGIN_CHALLENGE_RECEIVED, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(popView), name: ACTION_USERLOGIN_CHALLENGE_SUCCESS, object: nil)
-        //NSNotificationCenter.defaultCenter().addObserver(self, selector: "showProtectedPage:", name: ACTION_PINCODE_CHALLENGE_RECEIVED, object: nil)
-
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showSecuredPage), name: ACTION_USERLOGIN_CHALLENGE_SUCCESS, object: nil)
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -53,8 +52,12 @@ class LoginViewController: UIViewController {
         errorMsgLabel.text = notification.userInfo!["errorMsg"] as? String
     }
     
-    func popView(){
-        self.navigationController?.popViewControllerAnimated(true)
+    func showSecuredPage(){
+        if (self.navigationController?.viewControllers.first == self){
+            self.performSegueWithIdentifier("showSecuredPage", sender: self)
+        } else {
+            self.navigationController?.popViewControllerAnimated(true)
+        }
     }
     
 

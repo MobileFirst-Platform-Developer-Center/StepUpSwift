@@ -29,22 +29,18 @@ class SecuredViewController: UIViewController {
         self.navigationItem.title = "StepUp"
         self.navigationItem.setHidesBackButton(true, animated:true);
         
-        let logout = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(logout(_:)))
-        self.navigationItem.rightBarButtonItem = logout
-        
+        let logoutBtn = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(logout))
+        self.navigationItem.rightBarButtonItem = logoutBtn
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
         if let userName = NSUserDefaults.standardUserDefaults().stringForKey("displayName"){
             self.helloUserLabel.text = "Hello, " + userName
         }
-    }
-    
-    override func viewDidAppear(animated: Bool) {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showPinCodePopup(_:)), name: ACTION_PINCODE_CHALLENGE_RECEIVED, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showErrorPopup(_:)), name: ACTION_PINCODE_CHALLENGE_FAILURE, object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showErrorPopup(_:)), name: ACTION_PINCODE_CHALLENGE_FAILURE, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showLoginPage(_:)), name: ACTION_USERLOGIN_CHALLENGE_RECEIVED, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showPinCodePopup(_:)), name: ACTION_PINCODE_CHALLENGED, object: nil)
-
-      
-        NSNotificationCenter.defaultCenter().postNotificationName(ACTION_PINCODE_ISCHALLENGED , object: nil)
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -66,28 +62,35 @@ class SecuredViewController: UIViewController {
     
     @IBAction func transferFunds(sender: AnyObject) {
         self.resultLabel.text = ""
-        let alert = UIAlertController(title: "Tranfer funds", message: "Enter amount:", preferredStyle: .Alert)
-        alert.addTextFieldWithConfigurationHandler { (textField) -> Void in
-            textField.placeholder = "Amount"
-            textField.keyboardType = .NumberPad
-        }
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
-            let pinTextField = alert.textFields![0] as UITextField
-            self.transfer(pinTextField.text!)
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) -> Void in
-            //
-        }))
-        self.presentViewController(alert,
-            animated: true,
-            completion: nil)
         
-
+        WLAuthorizationManager.sharedInstance().obtainAccessTokenForScope("StepUpUserLogin") { (token, error) -> Void in
+            if (error != nil){
+                print("obtainAccessToken failure")
+            } else {
+                print("obtainAccessToken success")
+                let alert = UIAlertController(title: "Tranfer funds", message: "Enter amount:", preferredStyle: .Alert)
+                alert.addTextFieldWithConfigurationHandler { (textField) -> Void in
+                    textField.placeholder = "Amount"
+                    textField.keyboardType = .NumberPad
+                }
+                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+                    let pinTextField = alert.textFields![0] as UITextField
+                    self.transfer(pinTextField.text!)
+                }))
+                alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) -> Void in
+                    //
+                }))
+                self.presentViewController(alert,
+                                           animated: true,
+                                           completion: nil)
+            }
+        }
     }
     
-    @IBAction func logout(sender: AnyObject) {
-        self.performSegueWithIdentifier("logout", sender: self)
-        NSNotificationCenter.defaultCenter().postNotificationName(ACTION_USERLOGIN_LOGOUT , object: self)
+    func logout(){
+        self.resultLabel.text = ""
+        self.performSegueWithIdentifier("showLoginPage", sender: self)
+        NSNotificationCenter.defaultCenter().postNotificationName(ACTION_LOGOUT , object: self)
     }
     
     func transfer(amount: String){
@@ -95,11 +98,15 @@ class SecuredViewController: UIViewController {
         let formParams = ["amount":amount]
         request.sendWithFormParameters(formParams) { (response, error) -> Void in
             if (error != nil){
-                print("transferFoundsError: \(error.description)")
-                self.resultLabel.text = "Faild to transfer funds"
+                print("transferFounds Error: \(error.description)")
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.resultLabel.text = "Faild to transfer funds"
+                }
             } else {
-                print("transferFounds = \(String(response.status))")
-                self.resultLabel.text = "Tranfer funds successfully."
+                print("transferFounds Success with status: \(String(response.status))")
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.resultLabel.text = "Transfer funds successfully."
+                }
             }
         }
     }
@@ -125,20 +132,19 @@ class SecuredViewController: UIViewController {
             completion: nil)
     }
     
-    func showErrorPopup(notification: NSNotification){
-        let alert = UIAlertController(title: "Error",
-            message: notification.userInfo!["errorMsg"] as? String,
-            preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-        
-        self.presentViewController(alert,
-            animated: true,
-            completion: nil)
-
-    }
+//    func showErrorPopup(notification: NSNotification){
+//        let alert = UIAlertController(title: "Error",
+//            message: notification.userInfo!["errorMsg"] as? String,
+//            preferredStyle: .Alert)
+//        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+//        
+//        self.presentViewController(alert,
+//            animated: true,
+//            completion: nil)
+//    }
     
     func showLoginPage(notification: NSNotification){
-        self.performSegueWithIdentifier("logout", sender: self)
+        self.performSegueWithIdentifier("showLoginPage", sender: self)
     }
 
 }

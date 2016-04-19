@@ -16,18 +16,18 @@
 
 import Foundation
 
+let ACTION_LOGOUT = "com.sample.stepupswift.notify.logout"
+
 let ACTION_PINCODE_CHALLENGE_RECEIVED = "com.sample.stepupswift.notify.pincode.challenge.received"
-let ACTION_PINCODE_CHALLENGE_FAILURE = "com.sample.stepupswift.notify.challenge.failure"
+//let ACTION_PINCODE_CHALLENGE_FAILURE = "com.sample.stepupswift.notify.challenge.failure"
 let ACTION_PINCODE_CHALLENGE_SUBMIT_ANSWER = "com.sample.stepupswift.notify.pincode.challenge.submit.answer"
 let ACTION_PINCODE_CHALLENGE_CANCEL = "com.sample.stepupswift.notify.challenge.cancel"
-let ACTION_PINCODE_LOGOUT = "com.sample.stepupswift.notify.userlogin.pincode.logout"
-let ACTION_PINCODE_ISCHALLENGED = "com.sample.stepupswift.notify.pincode.ischallenged"
-let ACTION_PINCODE_CHALLENGED = "com.sample.stepupswift.notify.pincode.challenged"
+
 
 let ACTION_USERLOGIN_CHALLENGE_RECEIVED = "com.sample.stepupswift.notify.userlogin.challenge.received"
 let ACTION_USERLOGIN_CHALLENGE_SUCCESS = "com.sample.stepupswift.notify.userlogin.challenge.success"
 let ACTION_USERLOGIN_LOGIN_REQUIRED = "com.sample.stepupswift.notify.userlogin.login.required"
-let ACTION_USERLOGIN_LOGOUT = "com.sample.stepupswift.notify.userlogin.logout"
+let ACTION_USERLOGIN_LOGOUT_SUCCESS = "com.sample.stepupswift.notify.userlogin.logout.success"
 
 
 

@@ -26,13 +26,13 @@ class UserLoginChallengeHandler : WLChallengeHandler {
         super.init(securityCheck: securityCheckName)
         WLClient.sharedInstance().registerChallengeHandler(self)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(login(_:)), name: ACTION_USERLOGIN_LOGIN_REQUIRED, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(logout(_:)), name: ACTION_USERLOGIN_LOGOUT, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(logout), name: ACTION_LOGOUT, object: nil)
     }
     
     override func handleChallenge(challenge: [NSObject : AnyObject]!) {
         print("\(self.challengeHandlerName): handleChallenge - \(challenge)")
         self.isChallenged = true
-        var errorMsg: String
+        var errorMsg = ""
         if (challenge["errorMsg"] is NSNull) {
             errorMsg = ""
         } else{
@@ -51,38 +51,35 @@ class UserLoginChallengeHandler : WLChallengeHandler {
     override func handleFailure(failure: [NSObject : AnyObject]!) {
         print("\(self.challengeHandlerName): \(failure)")
         self.isChallenged = false
-//        var errorMsg: String
-//        if (failure["failure"] is NSNull) {
-//            errorMsg = "Unknown error"
-//        } else {
-//            errorMsg = failure["failure"] as! String
-//        }
-//        NSNotificationCenter.defaultCenter().postNotificationName(ACTION_CHALLENGE_FAILURE, object: self, userInfo: ["errorMsg":errorMsg])
     }
     
     func login(notification: NSNotification){
-        print("\(self.challengeHandlerName): login")
         let username = notification.userInfo!["username"] as! String
         let password = notification.userInfo!["password"] as! String
         if(!self.isChallenged){
+            print("\(self.challengeHandlerName): login")
             WLAuthorizationManager.sharedInstance().login(self.securityCheck, withCredentials: ["username": username, "password": password]) { (error) -> Void in
-                print("\(self.challengeHandlerName): login")
                 if(error != nil){
-                    print("\(self.challengeHandlerName): login onFailure - \(error.description)")                }
+                    print("\(self.challengeHandlerName): login failure - \(error.description)")
+                } else {
+                    print("\(self.challengeHandlerName): login success")
+                }
             }
         } else {
+            print("\(self.challengeHandlerName): submitChallengeAnswer")
             self.submitChallengeAnswer(["username": username, "password": password])
         }
     }
     
-    func logout(notification: NSNotification){
+    func logout(){
         print("\(self.challengeHandlerName): logout")
         WLAuthorizationManager.sharedInstance().logout(securityCheckName) { (error) -> Void in
             if (error != nil){
-                print("\(self.challengeHandlerName): logout onFailure - \(error.description)")
+                print("\(self.challengeHandlerName): logout failure - \(error.description)")
             } else {
-                NSNotificationCenter.defaultCenter().postNotificationName(ACTION_PINCODE_LOGOUT , object: self)
+                NSNotificationCenter.defaultCenter().postNotificationName(ACTION_USERLOGIN_LOGOUT_SUCCESS , object: self)
                 self.isChallenged = false
+                
             }
         }
     }
