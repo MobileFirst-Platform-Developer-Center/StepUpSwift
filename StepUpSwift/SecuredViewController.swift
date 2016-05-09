@@ -121,7 +121,7 @@ class SecuredViewController: UIViewController {
         }
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
             let pinTextField = alert.textFields![0] as UITextField
-            NSNotificationCenter.defaultCenter().postNotificationName(ACTION_PINCODE_CHALLENGE_SUBMIT_ANSWER , object: self, userInfo: ["pinCode":pinTextField.text!])
+            NSNotificationCenter.defaultCenter().postNotificationName(ACTION_PINCODE_SUBMIT_ANSWER , object: self, userInfo: ["pinCode":pinTextField.text!])
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) -> Void in
             NSNotificationCenter.defaultCenter().postNotificationName(ACTION_PINCODE_CHALLENGE_CANCEL , object: self)
