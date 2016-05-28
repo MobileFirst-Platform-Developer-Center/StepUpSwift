@@ -9,7 +9,7 @@ A sample application demonstrating the use of multiple challenge handlers.
 
 1. From a command-line window, navigate to the project's root folder and register the application: `mfpdev app register`
 2. Use either Maven, MobileFirst CLI or your IDE of choice to [build and deploy the available `ResourceAdapter`, `StepUpUserLogin` and `StepUpPinCode` adapters](https://mobilefirstplatform.ibmcloud.com/tutorials/en/foundation/8.0/adapters/creating-adapters/).
-3. In the MobileFirst console, under **Applications** → **PreemptiveLoginCordova** → **Security** → **Map scope elements to security checks**, add a mapping from `accessRestricted` to `StepUpUserLogin`.
+3. In the MobileFirst console, under **Applications** → **StepUpSwift** → **Security** → **Map scope elements to security checks**, add a mapping from `accessRestricted` to `StepUpUserLogin`.
 4. Add a mapping from `transferPrivilege` to both `StepUpUserLogin` and `StepUpPinCode`.
 5. In Xcode, run the application
 
