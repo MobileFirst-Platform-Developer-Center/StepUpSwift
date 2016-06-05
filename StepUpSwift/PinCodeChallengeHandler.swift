@@ -17,7 +17,7 @@
 import Foundation
 import IBMMobileFirstPlatformFoundation
 
-class PinCodeChallengeHandler : WLChallengeHandler {
+class PinCodeChallengeHandler : SecurityCheckChallengeHandler {
     
     let challengeHandlerName = "PinCodeChallengeHandler"
     let securityCheckName = "StepUpPinCode"
@@ -68,7 +68,7 @@ class PinCodeChallengeHandler : WLChallengeHandler {
     
     func challengeCanceled(){
         print("\(self.challengeHandlerName): challengeCanceled")
-        self.submitFailure(nil)
+        self.cancel()
     }
     
     func logout(){
