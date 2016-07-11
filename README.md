@@ -15,6 +15,8 @@ A sample application demonstrating the use of multiple challenge handlers.
 
 SecurityCheck adapter: https://github.com/MobileFirst-Platform-Developer-Center/SecurityCheckAdapters/tree/release80
 
+> **Tip:** you can update the bundled SDK by running the command `pod update` from the project's root folder.
+
 ### Supported Levels
 IBM MobileFirst Platform Foundation 8.0
 
