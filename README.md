@@ -7,13 +7,18 @@ A sample application demonstrating the use of multiple challenge handlers.
 
 ### Usage
 
-1. From a command-line window, navigate to the project's root folder and register the application: `mfpdev app register`
-2. Use either Maven, MobileFirst CLI or your IDE of choice to [build and deploy the available `ResourceAdapter`, `StepUpUserLogin` and `StepUpPinCode` adapters](https://mobilefirstplatform.ibmcloud.com/tutorials/en/foundation/8.0/adapters/creating-adapters/).
-3. In the MobileFirst console, under **Applications** → **StepUpSwift** → **Security** → **Map scope elements to security checks**, add a mapping from `accessRestricted` to `StepUpUserLogin`.
-4. Add a mapping from `transferPrivilege` to both `StepUpUserLogin` and `StepUpPinCode`.
-5. In Xcode, run the application
+1. Use either Maven, MobileFirst CLI or your IDE of choice to [build and deploy the available `ResourceAdapter`, `StepUpUserLogin` and `StepUpPinCode` adapters](https://mobilefirstplatform.ibmcloud.com/tutorials/en/foundation/8.0/adapters/creating-adapters/).
 
-SecurityCheck adapter: https://github.com/MobileFirst-Platform-Developer-Center/SecurityCheckAdapters/tree/release80
+    SecurityCheck adapter: https://github.com/MobileFirst-Platform-Developer-Center/SecurityCheckAdapters/tree/release80
+
+2. From a command-line window, navigate to the project's root folder and run the following commands:
+ -  `pod update` followed by `pod install` - to add the MobileFirst SDK.
+ -  `mfpdev app register` - to register the application
+ - `mfpdev app push` - to add the following scope mappings:
+  - `accessRestricted` to `StepUpUserLogin`.
+  - `transferPrivilege` to both `StepUpUserLogin` and `StepUpPinCode`.
+
+3. In Xcode, run the application
 
 ### Supported Levels
 IBM MobileFirst Platform Foundation 8.0
