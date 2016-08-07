@@ -15,12 +15,10 @@ A sample application demonstrating the use of multiple challenge handlers.
  -  `pod update` followed by `pod install` - to add the MobileFirst SDK.
  -  `mfpdev app register` - to register the application
  - `mfpdev app push` - to add the following scope mappings:
-  - `accessRestricted` to `StepUpUserLogin`.
-  - `transferPrivilege` to both `StepUpUserLogin` and `StepUpPinCode`.
+     - `accessRestricted` to `StepUpUserLogin`.
+     - `transferPrivilege` to both `StepUpUserLogin` and `StepUpPinCode`.
 
 3. In Xcode, run the application
-
-> **Tip:** you can update the bundled SDK by running the command `pod update` from the project's root folder.
 
 ### Supported Levels
 IBM MobileFirst Platform Foundation 8.0
