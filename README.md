@@ -20,6 +20,8 @@ A sample application demonstrating the use of multiple challenge handlers.
 
 3. In Xcode, run the application
 
+> **Tip:** you can update the bundled SDK by running the command `pod update` from the project's root folder.
+
 ### Supported Levels
 IBM MobileFirst Platform Foundation 8.0
 
