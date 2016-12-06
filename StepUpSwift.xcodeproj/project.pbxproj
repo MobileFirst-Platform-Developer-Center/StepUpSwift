@@ -40,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		19C4BD4C1DF6A3C700C1C171 /* StepUpSwift.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StepUpSwift.entitlements; sourceTree = "<group>"; };
 		38F092B2D66BF530B0DA10B6 /* Pods-StepUpSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StepUpSwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StepUpSwift/Pods-StepUpSwift.debug.xcconfig"; sourceTree = "<group>"; };
 		82C298A41C91986600DAD586 /* StepUpSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StepUpSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82C298A71C91986600DAD586 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -125,6 +126,7 @@
 		82C298A61C91986600DAD586 /* StepUpSwift */ = {
 			isa = PBXGroup;
 			children = (
+				19C4BD4C1DF6A3C700C1C171 /* StepUpSwift.entitlements */,
 				82C298D91C9584F800DAD586 /* NSNotificationCenterKeys.swift */,
 				82C298A71C91986600DAD586 /* AppDelegate.swift */,
 				82C298D51C91C3EB00DAD586 /* LoginViewController.swift */,
@@ -237,13 +239,21 @@
 				TargetAttributes = {
 					82C298A31C91986600DAD586 = {
 						CreatedOnToolsVersion = 7.2.1;
+						LastSwiftMigration = 0810;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 					82C298B71C91986600DAD586 = {
 						CreatedOnToolsVersion = 7.2.1;
+						LastSwiftMigration = 0810;
 						TestTargetID = 82C298A31C91986600DAD586;
 					};
 					82C298C21C91986600DAD586 = {
 						CreatedOnToolsVersion = 7.2.1;
+						LastSwiftMigration = 0810;
 						TestTargetID = 82C298A31C91986600DAD586;
 					};
 				};
@@ -497,10 +507,13 @@
 			baseConfigurationReference = 38F092B2D66BF530B0DA10B6 /* Pods-StepUpSwift.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = StepUpSwift/StepUpSwift.entitlements;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = StepUpSwift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sample.StepUpSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -509,10 +522,13 @@
 			baseConfigurationReference = A838411C96A658EB1A8FB7D7 /* Pods-StepUpSwift.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = StepUpSwift/StepUpSwift.entitlements;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = StepUpSwift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sample.StepUpSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
@@ -524,6 +540,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sample.StepUpSwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StepUpSwift.app/StepUpSwift";
 			};
 			name = Debug;
@@ -536,6 +553,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sample.StepUpSwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StepUpSwift.app/StepUpSwift";
 			};
 			name = Release;
@@ -547,6 +565,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sample.StepUpSwiftUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = StepUpSwift;
 				USES_XCTRUNNER = YES;
 			};
@@ -559,6 +578,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sample.StepUpSwiftUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = StepUpSwift;
 				USES_XCTRUNNER = YES;
 			};
