@@ -26,13 +26,13 @@ class PinCodeChallengeHandler : SecurityCheckChallengeHandler {
     override init() {
         super.init(securityCheck: securityCheckName)
         WLClient.sharedInstance().registerChallengeHandler(self)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(challengeSubmitAnswer(_:)), name: ACTION_PINCODE_SUBMIT_ANSWER, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(challengeCanceled), name: ACTION_PINCODE_CHALLENGE_CANCEL, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(logout), name: ACTION_USERLOGIN_LOGOUT_SUCCESS, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(challengeSubmitAnswer(_:)), name: NSNotification.Name(rawValue: ACTION_PINCODE_SUBMIT_ANSWER), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(challengeCanceled), name: NSNotification.Name(rawValue: ACTION_PINCODE_CHALLENGE_CANCEL), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(logout), name: NSNotification.Name(rawValue: ACTION_USERLOGIN_LOGOUT_SUCCESS), object: nil)
 
     }
     
-    override func handleChallenge(challenge: [NSObject : AnyObject]!) {
+    override func handleChallenge(_ challenge: [AnyHashable: Any]!) {
         print("\(self.challengeHandlerName): handleChallenge - \(challenge)")
         isChallenged = true
         var errorMsg: String
@@ -41,10 +41,10 @@ class PinCodeChallengeHandler : SecurityCheckChallengeHandler {
         } else{
             errorMsg = challenge["errorMsg"] as! String
         }
-        NSNotificationCenter.defaultCenter().postNotificationName(ACTION_PINCODE_CHALLENGE_RECEIVED , object: self, userInfo: ["errorMsg":errorMsg])
+        NotificationCenter.default.post(name: Notification.Name(rawValue: ACTION_PINCODE_CHALLENGE_RECEIVED) , object: self, userInfo: ["errorMsg":errorMsg])
     }
     
-    override func handleFailure(failure: [NSObject : AnyObject]!) {
+    override func handleFailure(_ failure: [AnyHashable: Any]!) {
         print("\(self.challengeHandlerName): handleFailure - \(failure)")
         isChallenged = false
         var errorMsg: String
@@ -53,15 +53,15 @@ class PinCodeChallengeHandler : SecurityCheckChallengeHandler {
         } else {
             errorMsg = failure["failure"] as! String
         }
-        NSNotificationCenter.defaultCenter().postNotificationName(ACTION_PINCODE_CHALLENGE_FAILURE, object: self, userInfo: ["errorMsg":errorMsg])
+        NotificationCenter.default.post(name: Notification.Name(rawValue: ACTION_PINCODE_CHALLENGE_FAILURE), object: self, userInfo: ["errorMsg":errorMsg])
     }
     
-    override func handleSuccess(success: [NSObject : AnyObject]!) {
+    override func handleSuccess(_ success: [AnyHashable: Any]!) {
         print("\(self.challengeHandlerName): handleSuccess - \(success)")
         isChallenged = false
     }
     
-    func challengeSubmitAnswer(notification: NSNotification){
+    func challengeSubmitAnswer(_ notification: Notification){
         print("\(self.challengeHandlerName): challengeSubmitAnswer")
         self.submitChallengeAnswer(["pin": (notification.userInfo!["pinCode"] as? String)!])
     }
@@ -75,7 +75,7 @@ class PinCodeChallengeHandler : SecurityCheckChallengeHandler {
         print("\(self.challengeHandlerName): logout")
         WLAuthorizationManager.sharedInstance().logout(securityCheckName) { (error) -> Void in
             if (error != nil){
-                print("\(self.challengeHandlerName): logout failure - \(error.description)")
+                print("\(self.challengeHandlerName): logout failure - \(error.debugDescription)")
             } else {
                 print("\(self.challengeHandlerName): logout success)")
             }

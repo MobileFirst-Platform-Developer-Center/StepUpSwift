@@ -30,39 +30,39 @@ class LoginViewController: UIViewController {
         self.navigationItem.setHidesBackButton(true, animated:true);
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showError(_:)), name: ACTION_USERLOGIN_CHALLENGE_RECEIVED, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showSecuredPage), name: ACTION_USERLOGIN_CHALLENGE_SUCCESS, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(cancelPincodeChallenge), name: ACTION_PINCODE_CHALLENGE_RECEIVED, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showError(_:)), name: NSNotification.Name(rawValue: ACTION_USERLOGIN_CHALLENGE_RECEIVED), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showSecuredPage), name: NSNotification.Name(rawValue: ACTION_USERLOGIN_CHALLENGE_SUCCESS), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(cancelPincodeChallenge), name: NSNotification.Name(rawValue: ACTION_PINCODE_CHALLENGE_RECEIVED), object: nil)
     }
     
-    override func viewDidDisappear(animated: Bool) {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+    override func viewDidDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
     }
 
-    @IBAction func login(sender: AnyObject) {
+    @IBAction func login(_ sender: AnyObject) {
         if(self.username.text != "" && self.password.text != ""){
-            NSNotificationCenter.defaultCenter().postNotificationName(ACTION_USERLOGIN_LOGIN_REQUIRED, object: self, userInfo: ["username": username.text!, "password": password.text!])
+            NotificationCenter.default.post(name: Notification.Name(rawValue: ACTION_USERLOGIN_LOGIN_REQUIRED), object: self, userInfo: ["username": username.text!, "password": password.text!])
         } else {
             errorMsgLabel.text = "Username and password are required"
         }
     }
 
-    func showError(notification: NSNotification){
+    func showError(_ notification: Notification){
         errorMsgLabel.text = notification.userInfo!["errorMsg"] as? String
     }
     
     func showSecuredPage(){
         if (self.navigationController?.viewControllers.first == self){
-            self.performSegueWithIdentifier("showSecuredPage", sender: self)
+            self.performSegue(withIdentifier: "showSecuredPage", sender: self)
         } else {
-            self.navigationController?.popViewControllerAnimated(true)
+            _ =  self.navigationController?.popViewController(animated: true)
         }
     }
     
     func cancelPincodeChallenge(){
-        NSNotificationCenter.defaultCenter().postNotificationName(ACTION_PINCODE_CHALLENGE_CANCEL, object: self)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: ACTION_PINCODE_CHALLENGE_CANCEL), object: self)
     }
 
 }
