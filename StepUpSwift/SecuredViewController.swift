@@ -29,58 +29,58 @@ class SecuredViewController: UIViewController {
         self.navigationItem.title = "StepUp"
         self.navigationItem.setHidesBackButton(true, animated:true);
         
-        let logoutBtn = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(logout))
+        let logoutBtn = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.plain, target: self, action: #selector(logout))
         self.navigationItem.rightBarButtonItem = logoutBtn
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        if let userName = NSUserDefaults.standardUserDefaults().stringForKey("displayName"){
+        if let userName = UserDefaults.standard.string(forKey: "displayName"){
             self.helloUserLabel.text = "Hello, " + userName
         }
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showPinCodePopup(_:)), name: ACTION_PINCODE_CHALLENGE_RECEIVED, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showErrorPopup(_:)), name: ACTION_PINCODE_CHALLENGE_FAILURE, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showLoginPage(_:)), name: ACTION_USERLOGIN_CHALLENGE_RECEIVED, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showPinCodePopup(_:)), name: NSNotification.Name(rawValue: ACTION_PINCODE_CHALLENGE_RECEIVED), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showErrorPopup(_:)), name: NSNotification.Name(rawValue: ACTION_PINCODE_CHALLENGE_FAILURE), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showLoginPage(_:)), name: NSNotification.Name(rawValue: ACTION_USERLOGIN_CHALLENGE_RECEIVED), object: nil)
     }
     
-    override func viewDidDisappear(animated: Bool) {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+    override func viewDidDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
     }
 
-    @IBAction func getBalance(sender: AnyObject) {
-        let request = WLResourceRequest(URL: NSURL(string: "/adapters/ResourceAdapter/balance"), method: WLHttpMethodGet)
-        request.sendWithCompletionHandler { (response, error) -> Void in
+    @IBAction func getBalance(_ sender: AnyObject) {
+        let request = WLResourceRequest(url: URL(string: "/adapters/ResourceAdapter/balance"), method: WLHttpMethodGet)
+        request?.send { (response, error) -> Void in
             if (error != nil){
-                NSLog("getBalanceError: " + error.description)
+                NSLog("getBalanceError: " + error.debugDescription)
                 self.resultLabel.text = "Failed to get balance"
             } else {
-                NSLog("getBalance = " + response.responseText)
-                self.resultLabel.text = "Balance = " + response.responseText
+                NSLog("getBalance = " + (response?.responseText)!)
+                self.resultLabel.text = "Balance = " + (response?.responseText)!
             }
         }
     }
     
-    @IBAction func transferFunds(sender: AnyObject) {
+    @IBAction func transferFunds(_ sender: AnyObject) {
         self.resultLabel.text = ""
         
-        WLAuthorizationManager.sharedInstance().obtainAccessTokenForScope("StepUpUserLogin") { (token, error) -> Void in
+        WLAuthorizationManager.sharedInstance().obtainAccessToken(forScope: "StepUpUserLogin") { (token, error) -> Void in
             if (error != nil){
                 print("obtainAccessToken failure")
             } else {
                 print("obtainAccessToken success")
-                let alert = UIAlertController(title: "Tranfer funds", message: "Enter amount:", preferredStyle: .Alert)
-                alert.addTextFieldWithConfigurationHandler { (textField) -> Void in
+                let alert = UIAlertController(title: "Tranfer funds", message: "Enter amount:", preferredStyle: .alert)
+                alert.addTextField { (textField) -> Void in
                     textField.placeholder = "Amount"
-                    textField.keyboardType = .NumberPad
+                    textField.keyboardType = .numberPad
                 }
-                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
                     let pinTextField = alert.textFields![0] as UITextField
                     self.transfer(pinTextField.text!)
                 }))
-                alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) -> Void in
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
                     //
                 }))
-                self.presentViewController(alert,
+                self.present(alert,
                                            animated: true,
                                            completion: nil)
             }
@@ -89,62 +89,62 @@ class SecuredViewController: UIViewController {
     
     func logout(){
         self.resultLabel.text = ""
-        self.performSegueWithIdentifier("showLoginPage", sender: self)
-        NSNotificationCenter.defaultCenter().postNotificationName(ACTION_LOGOUT , object: self)
+        self.performSegue(withIdentifier: "showLoginPage", sender: self)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: ACTION_LOGOUT) , object: self)
     }
     
-    func transfer(amount: String){
-        let request = WLResourceRequest(URL: NSURL(string: "/adapters/ResourceAdapter/transfer"), method: WLHttpMethodPost)
+    func transfer(_ amount: String){
+        let request = WLResourceRequest(url: URL(string: "/adapters/ResourceAdapter/transfer"), method: WLHttpMethodPost)
         let formParams = ["amount":amount]
-        request.sendWithFormParameters(formParams) { (response, error) -> Void in
+        request?.send(withFormParameters: formParams) { (response, error) -> Void in
             if (error != nil){
-                print("transferFounds Error: \(error.description)")
-                dispatch_async(dispatch_get_main_queue()) {
+                print("transferFounds Error: \(error.debugDescription)")
+                DispatchQueue.main.async {
                     self.resultLabel.text = "Faild to transfer funds"
                 }
             } else {
-                print("transferFounds Success with status: \(String(response.status))")
-                dispatch_async(dispatch_get_main_queue()) {
+                print("transferFounds Success with status: \(String(describing: response?.status))")
+                DispatchQueue.main.async {
                     self.resultLabel.text = "Transfer funds successfully."
                 }
             }
         }
     }
     
-    func showPinCodePopup(notification: NSNotification){
+    func showPinCodePopup(_ notification: Notification){
         let alert = UIAlertController(title: "Pin Code",
             message: notification.userInfo!["errorMsg"] as? String,
-            preferredStyle: .Alert)
-        alert.addTextFieldWithConfigurationHandler { (textField) -> Void in
+            preferredStyle: .alert)
+        alert.addTextField { (textField) -> Void in
             textField.placeholder = "PIN CODE"
-            textField.keyboardType = .NumberPad
+            textField.keyboardType = .numberPad
         }
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
             let pinTextField = alert.textFields![0] as UITextField
-            NSNotificationCenter.defaultCenter().postNotificationName(ACTION_PINCODE_SUBMIT_ANSWER , object: self, userInfo: ["pinCode":pinTextField.text!])
+            NotificationCenter.default.post(name: Notification.Name(rawValue: ACTION_PINCODE_SUBMIT_ANSWER) , object: self, userInfo: ["pinCode":pinTextField.text!])
         }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) -> Void in
-            NSNotificationCenter.defaultCenter().postNotificationName(ACTION_PINCODE_CHALLENGE_CANCEL , object: self)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
+            NotificationCenter.default.post(name: Notification.Name(rawValue: ACTION_PINCODE_CHALLENGE_CANCEL) , object: self)
         }))
         
-        self.presentViewController(alert,
+        self.present(alert,
             animated: true,
             completion: nil)
     }
     
-    func showErrorPopup(notification: NSNotification){
+    func showErrorPopup(_ notification: Notification){
         let alert = UIAlertController(title: "Error",
             message: notification.userInfo!["errorMsg"] as? String,
-            preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         
-        self.presentViewController(alert,
+        self.present(alert,
             animated: true,
             completion: nil)
     }
     
-    func showLoginPage(notification: NSNotification){
-        self.performSegueWithIdentifier("showLoginPage", sender: self)
+    func showLoginPage(_ notification: Notification){
+        self.performSegue(withIdentifier: "showLoginPage", sender: self)
     }
 
 }
