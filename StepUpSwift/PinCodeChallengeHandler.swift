@@ -61,17 +61,17 @@ class PinCodeChallengeHandler : SecurityCheckChallengeHandler {
         isChallenged = false
     }
     
-    func challengeSubmitAnswer(_ notification: Notification){
+    @objc func challengeSubmitAnswer(_ notification: Notification){
         print("\(self.challengeHandlerName): challengeSubmitAnswer")
         self.submitChallengeAnswer(["pin": (notification.userInfo!["pinCode"] as? String)!])
     }
     
-    func challengeCanceled(){
+    @objc func challengeCanceled(){
         print("\(self.challengeHandlerName): challengeCanceled")
         self.cancel()
     }
     
-    func logout(){
+    @objc func logout(){
         print("\(self.challengeHandlerName): logout")
         WLAuthorizationManager.sharedInstance().logout(securityCheckName) { (error) -> Void in
             if (error != nil){

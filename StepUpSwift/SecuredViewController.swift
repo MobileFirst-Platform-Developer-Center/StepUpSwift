@@ -29,7 +29,7 @@ class SecuredViewController: UIViewController {
         self.navigationItem.title = "StepUp"
         self.navigationItem.setHidesBackButton(true, animated:true);
         
-        let logoutBtn = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.plain, target: self, action: #selector(logout))
+        let logoutBtn = UIBarButtonItem(title: "Logout", style: UIBarButtonItem.Style.plain, target: self, action: #selector(logout))
         self.navigationItem.rightBarButtonItem = logoutBtn
     }
     
@@ -87,7 +87,7 @@ class SecuredViewController: UIViewController {
         }
     }
     
-    func logout(){
+    @objc func logout(){
         self.resultLabel.text = ""
         self.performSegue(withIdentifier: "showLoginPage", sender: self)
         NotificationCenter.default.post(name: Notification.Name(rawValue: ACTION_LOGOUT) , object: self)
@@ -111,7 +111,7 @@ class SecuredViewController: UIViewController {
         }
     }
     
-    func showPinCodePopup(_ notification: Notification){
+    @objc func showPinCodePopup(_ notification: Notification){
         let alert = UIAlertController(title: "Pin Code",
             message: notification.userInfo!["errorMsg"] as? String,
             preferredStyle: .alert)
@@ -132,7 +132,7 @@ class SecuredViewController: UIViewController {
             completion: nil)
     }
     
-    func showErrorPopup(_ notification: Notification){
+    @objc func showErrorPopup(_ notification: Notification){
         let alert = UIAlertController(title: "Error",
             message: notification.userInfo!["errorMsg"] as? String,
             preferredStyle: .alert)
@@ -143,7 +143,7 @@ class SecuredViewController: UIViewController {
             completion: nil)
     }
     
-    func showLoginPage(_ notification: Notification){
+    @objc func showLoginPage(_ notification: Notification){
         self.performSegue(withIdentifier: "showLoginPage", sender: self)
     }
 

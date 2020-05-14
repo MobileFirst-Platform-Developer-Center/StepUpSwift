@@ -49,11 +49,11 @@ class LoginViewController: UIViewController {
         }
     }
 
-    func showError(_ notification: Notification){
+    @objc func showError(_ notification: Notification){
         errorMsgLabel.text = notification.userInfo!["errorMsg"] as? String
     }
     
-    func showSecuredPage(){
+    @objc func showSecuredPage(){
         if (self.navigationController?.viewControllers.first == self){
             self.performSegue(withIdentifier: "showSecuredPage", sender: self)
         } else {
@@ -61,7 +61,7 @@ class LoginViewController: UIViewController {
         }
     }
     
-    func cancelPincodeChallenge(){
+    @objc func cancelPincodeChallenge(){
         NotificationCenter.default.post(name: Notification.Name(rawValue: ACTION_PINCODE_CHALLENGE_CANCEL), object: self)
     }
 
