@@ -56,7 +56,7 @@ class UserLoginChallengeHandler : SecurityCheckChallengeHandler {
         self.isChallenged = false
     }
     
-    func login(_ notification: Notification){
+    @objc func login(_ notification: Notification){
         let username = notification.userInfo!["username"] as! String
         let password = notification.userInfo!["password"] as! String
         if(!self.isChallenged){
@@ -74,7 +74,7 @@ class UserLoginChallengeHandler : SecurityCheckChallengeHandler {
         }
     }
     
-    func logout(){
+    @objc func logout(){
         print("\(self.challengeHandlerName): logout")
         WLAuthorizationManager.sharedInstance().logout(securityCheckName) { (error) -> Void in
             if (error != nil){
